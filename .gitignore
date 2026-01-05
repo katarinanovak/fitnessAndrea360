@@ -1,0 +1,39 @@
+﻿# ================= BACKEND =================
+fitnessAndrea360/target/
+fitnessAndrea360/bin/
+fitnessAndrea360/.gradle/
+fitnessAndrea360/.settings/
+fitnessAndrea360/.classpath/
+fitnessAndrea360/.project/
+fitnessAndrea360/.idea/
+fitnessAndrea360/*.iml
+fitnessAndrea360/.DS_Store
+fitnessAndrea360/*.jar
+fitnessAndrea360/*.war
+fitnessAndrea360/*.log
+
+# ================= FRONTEND ================
+fitnessandrea-frontend/node_modules/
+fitnessandrea-frontend/build/
+fitnessandrea-frontend/dist/
+fitnessandrea-frontend/.next/
+fitnessandrea-frontend/.env*
+fitnessandrea-frontend/*.log*
+fitnessandrea-frontend/.eslintcache
+fitnessandrea-frontend/coverage/
+fitnessandrea-frontend/.DS_Store
+
+# ============= CONFIGURATION SECRETS =============
+fitnessAndrea360/src/main/resources/application-local.properties
+fitnessAndrea360/src/main/resources/application-dev.properties
+fitnessAndrea360/src/main/resources/application-prod.properties
+.env
+*.env
+
+# ===================== IDE ======================
+.vscode/
+.idea/
+
+# ===================== OS =======================
+.DS_Store
+Thumbs.db
