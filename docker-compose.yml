@@ -4,14 +4,14 @@
     container_name: fitness-mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}  # PROMENI OVO
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: fitness_center
     ports:
       - "3308:3306"
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${DB_PASSWORD}"]  # PROMENI OVO
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${DB_PASSWORD}"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -23,13 +23,26 @@
     ports:
       - "8080:8080"
     environment:
+      # PROFILE
       SPRING_PROFILES_ACTIVE: docker
+      
+      # DATABASE
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/fitness_center?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}  # PROMENI OVO
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      
+      # JPA
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      JWT_SECRET: ${JWT_SECRET}  # PROMENI OVO
+      
+      # JWT
+      JWT_SECRET: ${JWT_SECRET}
       JWT_EXPIRATION: 86400000
+      
+      # STRIPE - OVO JE KLJUČNO ŠTO FALI!
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      STRIPE_PUBLIC_KEY: ${STRIPE_PUBLIC_KEY}
+      
+      # FRONTEND
       FRONTEND_URL: http://frontend:3000
     depends_on:
       mysql:
