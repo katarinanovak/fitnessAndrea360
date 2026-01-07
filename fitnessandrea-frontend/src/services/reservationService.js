@@ -53,7 +53,7 @@ export const createReservation = async (reservationData) => {
   }
 };
 
-// Dobavi sve rezervacije za trenutnu lokaciju employee-a
+
 export const getReservationsByLocation = async (locationId = null) => {
   try {
     const token = localStorage.getItem('token');
@@ -193,7 +193,7 @@ export const updateReservationStatus = async (reservationId, status) => {
   }
 };
 
-// Obriši rezervaciju
+
 export const deleteReservation = async (reservationId) => {
   try {
     const token = localStorage.getItem('token');
@@ -222,7 +222,7 @@ export const deleteReservation = async (reservationId) => {
   }
 };
 
-// Dobavi kapacitet za appointment
+
 export const getAppointmentCapacity = async (appointmentId) => {
   try {
     const token = localStorage.getItem('token');
@@ -249,131 +249,7 @@ export const getAppointmentCapacity = async (appointmentId) => {
     throw error;
   }
 };
-// Dobavi dostupne termine za člana
-// U reservationService.js, promeni getAvailableAppointments funkciju:
-// export const getAvailableAppointments = async () => {
-//   try {
-//     const token = localStorage.getItem('token');
-    
-//     if (!token) {
-//       throw new Error('Please login to continue.');
-//     }
 
-//     console.log('🔗 Fetching available appointments...');
-    
-//     const response = await fetch(`${API_URL}/appointments/available`, {
-//       method: 'GET',
-//       headers: {
-//         'Authorization': `Bearer ${token}`,
-//         'Accept': 'application/json'
-//       }
-//     });
-
-//     console.log('📊 Response status:', response.status);
-    
-//     if (!response.ok) {
-//       throw new Error(`Failed to fetch available appointments: ${response.status}`);
-//     }
-
-//     const data = await response.json();
-//     console.log('✅ Available appointments fetched:', data.length, 'items');
-    
-//     // DEBUG: Prikaži prvi appointment
-//     if (data.length > 0) {
-//       console.log('First appointment:', data[0]);
-//       console.log('Service ID:', data[0].serviceId);
-//       console.log('Start time:', data[0].startTime);
-//     }
-    
-//     return data;
-    
-//   } catch (error) {
-//     console.error('❌ Error fetching available appointments:', error);
-//     throw error;
-//   }
-// };
-// src/services/reservationService.js - PROMENI OVU FUNKCIJU:
-
-// export const getAvailableAppointments = async () => {
-//   try {
-//     const token = localStorage.getItem('token');
-//     const user = JSON.parse(localStorage.getItem('user'));
-    
-//     if (!token) {
-//       throw new Error('Please login to continue.');
-//     }
-
-//     console.log('🔗 Fetching available appointments for member:', user?.id);
-    
-//     // VARIJANTA 1: Pokušaj sa member-specific endpointom
-//     try {
-//       const response = await fetch(`${API_URL}/appointments/available-for-member`, {
-//         method: 'GET',
-//         headers: {
-//           'Authorization': `Bearer ${token}`,
-//           'Accept': 'application/json'
-//         }
-//       });
-
-//       if (response.ok) {
-//         const data = await response.json();
-//         console.log('✅ Member-specific appointments fetched:', data.length);
-//         return data;
-//       }
-//     } catch (apiError) {
-//       console.log('Member-specific endpoint not available, trying generic');
-//     }
-
-//     // VARIJANTA 2: Uzmi sve termine i filtriraj na frontendu
-//     console.log('📋 Falling back to filtering all appointments');
-//     const response = await fetch(`${API_URL}/appointments/available`, {
-//       method: 'GET',
-//       headers: {
-//         'Authorization': `Bearer ${token}`,
-//         'Accept': 'application/json'
-//       }
-//     });
-
-//     console.log('📊 Response status:', response.status);
-    
-//     if (!response.ok) {
-//       throw new Error(`Failed to fetch available appointments: ${response.status}`);
-//     }
-
-//     const allAppointments = await response.json();
-//     console.log('📦 All available appointments:', allAppointments.length);
-    
-//     // FILTRIRAJ: samo termini koje član MOŽE da rezerviše
-//     // 1. Proveri da li član ima purchase za taj servis
-//     const memberPurchases = await getMemberPurchases();
-//     console.log('🛒 Member purchases:', memberPurchases.length);
-    
-//     // 2. Filtriraj termine
-//     const filteredAppointments = allAppointments.filter(appointment => {
-//       // A) Da li je termin još uvek slobodan?
-//       const hasCapacity = (appointment.currentCapacity || 0) < (appointment.maxCapacity || 1);
-      
-//       // B) Da li član ima purchase za ovaj servis?
-//       const hasPurchaseForService = memberPurchases.some(purchase => 
-//         purchase.serviceId === appointment.serviceId && 
-//         purchase.remainingUses > 0
-//       );
-      
-//       // C) Da li je član već rezervisao ovaj termin?
-//       // (Ovo ćemo proveriti kasnije)
-      
-//       return hasCapacity && hasPurchaseForService;
-//     });
-    
-//     console.log(`✅ Filtered to ${filteredAppointments.length} available appointments for member`);
-    
-//     return filteredAppointments;
-    
-//   } catch (error) {
-//     console.error('❌ Error fetching available appointments:', error);
-//     throw error;
-//   }
-// };
 export const getAvailableAppointments = async () => {
   try {
     const token = localStorage.getItem('token');
@@ -385,7 +261,7 @@ export const getAvailableAppointments = async () => {
 
     console.log('🔗 Fetching available appointments for member:', user?.id);
     
-    // VARIJANTA 1: Pokušaj sa member-specific endpointom
+    // member-specific endpointom
     try {
       const response = await fetch(`${API_URL}/appointments/available-for-member`, {
         method: 'GET',
@@ -404,7 +280,7 @@ export const getAvailableAppointments = async () => {
       console.log('Member-specific endpoint not available, trying generic');
     }
 
-    // VARIJANTA 2: Uzmi sve termine i filtriraj na frontendu
+    // svi termini i filtriraj na frontendu
     console.log('📋 Falling back to filtering all appointments');
     const response = await fetch(`${API_URL}/appointments/available`, {
       method: 'GET',
@@ -423,7 +299,7 @@ export const getAvailableAppointments = async () => {
     const allAppointments = await response.json();
     console.log('📦 All available appointments:', allAppointments.length);
     
-    // ✅ DEBUG - DODAJ OVO!
+   
     if (allAppointments.length > 0) {
       console.log('🔍 FIRST APPOINTMENT RAW DATA:');
       console.log(JSON.stringify(allAppointments[0], null, 2));
@@ -445,7 +321,7 @@ export const getAvailableAppointments = async () => {
     
     console.log(`✅ Filtered to ${filteredAppointments.length} available appointments for member`);
     
-    // ✅ DEBUG - PRIKAŽI FIRST FILTERED
+  
     if (filteredAppointments.length > 0) {
       console.log('🔍 FIRST FILTERED APPOINTMENT:');
       console.log(JSON.stringify(filteredAppointments[0], null, 2));
@@ -461,7 +337,6 @@ export const getAvailableAppointments = async () => {
 
 
 
-// Dobavi rezervacije trenutnog člana
 export const getMemberReservations = async () => {
   try {
     const token = localStorage.getItem('token');
@@ -489,15 +364,10 @@ export const getMemberReservations = async () => {
     
   } catch (error) {
     console.error('❌ Error fetching member reservations:', error);
-    return []; // Vrati prazan array umesto bacanja greške
+    return []; 
   }
 };
-// src/services/reservationService.js
 
-// OVA FUNKCIJA JE ISPRAVNA - vraća samo rezervacije trenutnog člana
-
-
-// DODAJ OVU FUNKCIJU ako želiš da imaš odvojenu za današnje
 export const getMemberTodayReservations = async () => {
   try {
     const reservations = await getMemberReservations();
@@ -518,7 +388,7 @@ export const getMemberTodayReservations = async () => {
   }
 };
 
-// Dobavi kapacitete za sve termine na lokaciji
+
 export const getLocationAppointmentsCapacity = async (locationId) => {
   try {
     const token = localStorage.getItem('token');
@@ -546,7 +416,7 @@ export const getLocationAppointmentsCapacity = async (locationId) => {
   }
 };
 
-// Export objekta za retro kompatibilnost
+
 export const reservationService = {
   createReservation,
   getReservationsByLocation,

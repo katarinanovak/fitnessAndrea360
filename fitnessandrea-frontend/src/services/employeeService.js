@@ -1,7 +1,6 @@
 // src/services/employeeService.js
 const API_URL = 'http://localhost:8080';
 
-// Kreiraj novog zaposlenog
 export const createEmployee = async (employeeData) => {
   try {
     const token = localStorage.getItem('token');
@@ -38,7 +37,7 @@ export const createEmployee = async (employeeData) => {
   }
 };
 
-// Dobavi sve zaposlene (sa opcijom filtera po lokaciji)
+
 export const getAllEmployees = async (locationId = null) => {
   try {
     const token = localStorage.getItem('token');
@@ -76,7 +75,6 @@ export const getAllEmployees = async (locationId = null) => {
   }
 };
 
-// Dobavi zaposlenog po ID-u
 export const getEmployeeById = async (employeeId) => {
   try {
     const token = localStorage.getItem('token');
@@ -104,7 +102,7 @@ export const getEmployeeById = async (employeeId) => {
   }
 };
 
-// Ažuriraj zaposlenog
+
 export const updateEmployee = async (employeeId, employeeData) => {
   try {
     const token = localStorage.getItem('token');
@@ -138,7 +136,7 @@ export const updateEmployee = async (employeeId, employeeData) => {
   }
 };
 
-// Dodeli zaposlenog lokaciji
+
 export const assignEmployeeToLocation = async (employeeId, locationId) => {
   try {
     const token = localStorage.getItem('token');
@@ -174,7 +172,7 @@ export const assignEmployeeToLocation = async (employeeId, locationId) => {
   }
 };
 
-// Obriši zaposlenog
+
 export const deleteEmployee = async (employeeId) => {
   try {
     const token = localStorage.getItem('token');
@@ -209,7 +207,7 @@ export const deleteEmployee = async (employeeId) => {
   }
 };
 
-// Export objekta za retro kompatibilnost
+
 export const employeeService = {
   createEmployee,
   getAllEmployees,

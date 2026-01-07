@@ -2,7 +2,7 @@
 
 const API_URL = 'http://localhost:8080';
 
-// Get location by ID (za edit)
+
 export const getLocationById = async (locationId) => {
   try {
     const token = localStorage.getItem('token');
@@ -37,7 +37,7 @@ export const getLocationById = async (locationId) => {
   }
 };
 
-// Update location
+
 export const updateLocation = async (locationId, locationData) => {
   try {
     const token = localStorage.getItem('token');
@@ -74,7 +74,7 @@ export const updateLocation = async (locationId, locationData) => {
   }
 };
 
-// Kreiranje nove lokacije
+
 export const createLocation = async (locationData) => {
   try {
     const token = localStorage.getItem('token');
@@ -111,7 +111,7 @@ export const createLocation = async (locationData) => {
   }
 };
 
-// Dobavljanje svih lokacija
+
 export const getAllLocations = async () => {
   try {
     const token = localStorage.getItem('token');
@@ -139,7 +139,7 @@ export const getAllLocations = async () => {
   }
 };
 
-// Brisanje lokacije
+
 export const deleteLocation = async (locationId) => {
   try {
     const token = localStorage.getItem('token');

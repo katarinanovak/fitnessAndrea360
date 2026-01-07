@@ -1,7 +1,6 @@
 // src/services/serviceService.js
 const API_URL = 'http://localhost:8080';
 
-// Kreiraj novu uslugu
 export const createService = async (serviceData) => {
   try {
     const token = localStorage.getItem('token');
@@ -16,7 +15,7 @@ export const createService = async (serviceData) => {
 
     // Ako je employee, koristi njegov locationId
     if (user?.role === 'EMPLOYEE' && user?.locationId) {
-      serviceData.locationIds = [user.locationId]; // Employee može samo svoju lokaciju
+      serviceData.locationIds = [user.locationId];
       console.log('📍 Auto-setting locationId for employee:', user.locationId);
     }
 
@@ -58,64 +57,7 @@ export const createService = async (serviceData) => {
   }
 };
 
-// Dobavi sve usluge
-// Koristite ovaj fetch kod
-// export const getAllServices = async () => {
-//   try {
-//     const token = localStorage.getItem('token');
-    
-//     if (!token) {
-//       throw new Error('Please login to continue.');
-//     }
 
-//     console.log('🔗 Fetching from:', `${API_URL}/services`);
-    
-//     const response = await fetch(`${API_URL}/services`, {
-//       method: 'GET',
-//       headers: {
-//         'Authorization': `Bearer ${token}`,
-//         'Accept': 'application/json', // OVO JE KLJUČNO
-//         'Content-Type': 'application/json'
-//       }
-//     });
-
-//     console.log('📊 Response status:', response.status);
-//     console.log('📊 Response ok:', response.ok);
-//     console.log('📊 Response headers:', response.headers);
-    
-//     // Proverite da li je HTML
-//     const text = await response.text();
-//     console.log('📄 First 500 chars of response:', text.substring(0, 500));
-    
-//     if (text.startsWith('<!DOCTYPE') || text.startsWith('<html')) {
-//       console.error('❌ Server returned HTML instead of JSON');
-//       throw new Error('Server returned HTML page. Check CORS configuration.');
-//     }
-    
-//     if (!response.ok) {
-//       throw new Error(`HTTP ${response.status}: ${text}`);
-//     }
-    
-//     // Pokušajte parsirati JSON
-//     try {
-//       const data = JSON.parse(text);
-//       console.log('✅ Parsed JSON data:', data.length, 'items');
-//       return data;
-//     } catch (parseError) {
-//       console.error('❌ Failed to parse JSON:', parseError);
-//       console.error('📄 Raw text was:', text);
-//       throw new Error('Invalid JSON response from server');
-//     }
-    
-//   } catch (error) {
-//     console.error('❌ Error in getAllServices:', error);
-//     throw error;
-//   }
-// };
-// KOPIRAJ TAČNO KAO U employeeService.js KOJI RADI
-// src/services/serviceService.js
-
-// src/services/serviceService.js - POPRAVLJENA VERZIJA
 
 
 export const getAllServices = async () => {
@@ -133,26 +75,25 @@ export const getAllServices = async () => {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`
-        // NE dodajte Accept i Content-Type ako izazivaju probleme
+       
       },
-      credentials: 'include' // VAŽNO!
+      credentials: 'include' 
     });
 
     console.log('📊 Response status:', response.status);
 
     if (!response.ok) {
-      // Pročitajte tekst greške
+      
       const errorText = await response.text();
       console.error('❌ Server error:', errorText);
       throw new Error(`HTTP ${response.status}: ${errorText.substring(0, 100)}`);
     }
 
-    // Pročitajte response kao tekst prvo
+    
     const responseText = await response.text();
     console.log('📄 Response text length:', responseText.length);
     console.log('📄 First 200 chars:', responseText.substring(0, 200));
     
-    // Pokušajte parsirati JSON
     try {
       const data = JSON.parse(responseText);
       console.log('✅ Successfully parsed JSON, items:', data.length);
@@ -165,14 +106,11 @@ export const getAllServices = async () => {
     
   } catch (error) {
     console.error('❌ Error in getAllServices:', error.message);
-    throw error; // Ponovo bacite grešku da bi React komponenta videla
+    throw error; 
   }
 };
 
-// Ostale funkcije ostavite kako su...
 
-
-// Dobavi usluge po lokaciji
 export const getServicesByLocation = async (locationId) => {
   try {
     const token = localStorage.getItem('token');
@@ -200,7 +138,7 @@ export const getServicesByLocation = async (locationId) => {
   }
 };
 
-// Dobavi usluge za trenutnu lokaciju employee-a
+
 export const getServicesForCurrentLocation = async () => {
   try {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -215,7 +153,7 @@ export const getServicesForCurrentLocation = async () => {
   }
 };
 
-// Dobavi uslugu po ID-u
+
 export const getServiceById = async (serviceId) => {
   try {
     const token = localStorage.getItem('token');
@@ -243,7 +181,7 @@ export const getServiceById = async (serviceId) => {
   }
 };
 
-// Ažuriraj uslugu
+
 export const updateService = async (serviceId, serviceData) => {
   try {
     const token = localStorage.getItem('token');
@@ -275,7 +213,7 @@ export const updateService = async (serviceId, serviceData) => {
   }
 };
 
-// Obriši uslugu (soft delete)
+
 export const deleteService = async (serviceId) => {
   try {
     const token = localStorage.getItem('token');
@@ -304,7 +242,7 @@ export const deleteService = async (serviceId) => {
   }
 };
 
-// Export objekta za retro kompatibilnost
+
 export const serviceService = {
   createService,
   getAllServices,

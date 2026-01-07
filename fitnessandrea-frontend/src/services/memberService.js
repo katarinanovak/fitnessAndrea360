@@ -1,7 +1,7 @@
 // src/services/memberService.js
 const API_URL = 'http://localhost:8080';
 
-// Kreiraj novog člana
+
 export const createMember = async (memberData) => {
   try {
     const token = localStorage.getItem('token');
@@ -29,26 +29,26 @@ export const createMember = async (memberData) => {
       const errorText = await response.text();
       console.error('Raw error response:', errorText);
       
-      // Parse error message and provide user-friendly message
+     
       let userMessage = 'Failed to create member. ';
       
       if (response.status === 403) {
         userMessage += 'Access denied. You do not have permission to create members.';
       } else if (response.status === 400) {
-        // Try to extract validation errors
+       
         try {
           const errorJson = JSON.parse(errorText);
           if (errorJson.message) {
             userMessage += errorJson.message;
           } else if (errorJson.errors) {
-            // Handle validation errors array
+           
             const errors = errorJson.errors.map(err => 
               `${err.field}: ${err.defaultMessage}`
             ).join(', ');
             userMessage += `Validation errors: ${errors}`;
           }
         } catch {
-          // If not JSON, use the text
+         
           if (errorText.includes('punnoletan') || errorText.includes('18+')) {
             userMessage += 'Member must be at least 18 years old.';
           } else if (errorText.includes('Email već postoji') || errorText.includes('email already exists')) {
@@ -75,7 +75,7 @@ export const createMember = async (memberData) => {
   } catch (error) {
     console.error('❌ Error creating member:', error);
     
-    // Provide default message if error doesn't have one
+    
     if (!error.message || error.message.includes('Failed to create member: ')) {
       error.message = 'Failed to create member. Please check all information and try again.';
     }
@@ -84,7 +84,7 @@ export const createMember = async (memberData) => {
   }
 };
 
-// Dobavi sve članove
+
 export const getAllMembers = async () => {
   try {
     const token = localStorage.getItem('token');
@@ -114,7 +114,7 @@ export const getAllMembers = async () => {
   }
 };
 
-// Dobavi članove po lokaciji
+
 export const getMembersByLocation = async (locationId) => {
   try {
     const token = localStorage.getItem('token');
@@ -142,7 +142,7 @@ export const getMembersByLocation = async (locationId) => {
   }
 };
 
-// Export objekta za retro kompatibilnost
+
 export const memberService = {
   createMember,
   getAllMembers,

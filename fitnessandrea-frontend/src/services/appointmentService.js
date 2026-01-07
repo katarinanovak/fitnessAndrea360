@@ -13,19 +13,13 @@ export const createAppointment = async (appointmentData) => {
     if (!token) {
       throw new Error('Please login to continue.');
     }
-     // DODAJ OVO: Ako je employee, uzmi locationId iz user objekta
+     
     if (user?.role === 'EMPLOYEE' && user?.locationId) {
       console.log(`📍 Employee location: ${user.locationId}`);
-      appointmentData.locationId = user.locationId; // DODAJ locationId
+      appointmentData.locationId = user.locationId; 
     }
 
-    
 
-    // // Ako je employee, NE šalji locationId - backend će ga automatski uzeti iz tokena
-    // if (user?.role === 'EMPLOYEE') {
-    //   console.log('📍 Employee - removing locationId from request');
-    //   delete appointmentData.locationId; // Izbriši locationId iz requesta
-    // }
 
     const response = await fetch(`${API_URL}/appointments`, {
       method: 'POST',
@@ -73,7 +67,7 @@ export const createAppointment = async (appointmentData) => {
   }
 };
 
-// Dobavi sve termine za trenutnu lokaciju employee-a
+
 export const getAppointmentsForCurrentLocation = async () => {
   try {
     const token = localStorage.getItem('token');
@@ -88,7 +82,7 @@ export const getAppointmentsForCurrentLocation = async () => {
       throw new Error('Your account is not assigned to any location. Please contact administrator.');
     }
 
-    // Endpoint koji vraća termine za lokaciju
+    
     const response = await fetch(`${API_URL}/appointments/location/${user.locationId}`, {
       method: 'GET',
       headers: {
@@ -110,7 +104,6 @@ export const getAppointmentsForCurrentLocation = async () => {
   }
 };
 
-// Dobavi današnje termine za trenutnu lokaciju
 export const getTodayAppointments = async () => {
   try {
     const token = localStorage.getItem('token');
@@ -125,7 +118,7 @@ export const getTodayAppointments = async () => {
       throw new Error('Your account is not assigned to any location. Please contact administrator.');
     }
 
-    // Endpoint za današnje termine (možda ne postoji, pa ćemo filtrirati na frontendu)
+ 
     try {
       const response = await fetch(`${API_URL}/appointments/today/location/${user.locationId}`, {
         method: 'GET',
@@ -158,7 +151,7 @@ export const getTodayAppointments = async () => {
   }
 };
 
-// Otkazi appointment
+
 export const cancelAppointment = async (appointmentId, cancellationReason) => {
   try {
     const token = localStorage.getItem('token');
@@ -199,7 +192,7 @@ export const cancelAppointment = async (appointmentId, cancellationReason) => {
   }
 };
 
-// Potvrdi dolazak na appointment
+
 export const confirmAppointment = async (appointmentId) => {
   try {
     const token = localStorage.getItem('token');
@@ -287,9 +280,7 @@ export const getCapacityStatus = async (locationId, date = new Date().toISOStrin
   }
 };
 
-// Dobavi članove samo za employee-ovu lokaciju (filtriraj na frontendu)
-// ZAMENI OVU FUNKCIJU:
-// Dobavi članove samo za employee-ovu lokaciju (filtriraj na frontendu)
+
 export const getMembersForMyLocation = async () => {
   try {
     const token = localStorage.getItem('token');
@@ -360,9 +351,7 @@ export const getMembersForMyLocation = async () => {
   }
 };
 
-// Dobavi sve usluge za trenutnu lokaciju employee-a
-// ZAMENI I OVU FUNKCIJU:
-// Dobavi sve usluge za trenutnu lokaciju employee-a
+
 export const getServicesForMyLocation = async () => {
   try {
     const token = localStorage.getItem('token');
@@ -387,7 +376,7 @@ export const getServicesForMyLocation = async () => {
     const allServices = await response.json();
     console.log(`✅ Found ${allServices.length} total services`);
     
-    // Ako želiš da filtriraš usluge po lokaciji na frontendu:
+    // filtriranje usluga po lokaciji na frontendu:
     if (user?.role === 'EMPLOYEE' && user?.locationId) {
       const filteredServices = allServices.filter(service => {
         const locationIds = service.locationIds || 
@@ -413,7 +402,7 @@ export const getServicesForMyLocation = async () => {
   }
 };
 
-// Export objekta za retro kompatibilnost
+
 export const appointmentService = {
   createAppointment,
   getAppointmentsForCurrentLocation,

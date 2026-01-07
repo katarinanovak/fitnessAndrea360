@@ -35,7 +35,6 @@ export const login = async (email, password) => {
       throw new Error(data.message || data.error || `Login failed: ${response.status}`);
     }
 
-    // Proširite sačuvani user objekat sa više informacija
     const userData = {
       id: data.userId,
       email: data.email,
@@ -44,7 +43,7 @@ export const login = async (email, password) => {
       lastName: data.lastName || null,
       locationId: data.locationId || null,
       locationName: data.locationName || null,
-      // Permisije ćemo dodati u getCurrentUser funkciji
+ 
     };
 
     localStorage.setItem('token', data.token);
@@ -72,7 +71,7 @@ export const getPermissionsForRole = (role) => {
       'MANAGE_SERVICES'
     ],
     'EMPLOYEE': [
-      'CREATE_MEMBER',  // OVO JE KLJUČNO
+      'CREATE_MEMBER', 
       'EDIT_MEMBER', 
       'VIEW_ALL_MEMBERS',
       'VIEW_SCHEDULE',
@@ -167,7 +166,7 @@ export const getUserEmail = () => {
   return user ? user.email : null;
 };
 
-// NOVE FUNKCIJE ZA PERMISIJE
+
 export const hasPermission = (permission) => {
   const user = getCurrentUser();
   return user ? (user.permissions || []).includes(permission) : false;
@@ -191,7 +190,7 @@ export const hasAllPermissions = (permissions) => {
   );
 };
 
-// Eksportujte za retro kompatibilnost
+
 export const authService = {
   login,
   logout,
