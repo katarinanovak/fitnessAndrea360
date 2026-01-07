@@ -35,7 +35,6 @@ public class ServiceController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdService);
     }
 
-    // DODAJ OVO: GET endpoint za sve usluge
     @GetMapping
     @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE') or hasRole('MEMBER')")
     public ResponseEntity<List<ServiceResponseDTO>> getAllServices() {
@@ -43,7 +42,7 @@ public class ServiceController {
         return ResponseEntity.ok(services);
     }
 
-    // DODAJ OVO: GET endpoint za usluge po lokaciji
+
     @GetMapping("/location/{locationId}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE') or hasRole('MEMBER')")
     public ResponseEntity<List<ServiceResponseDTO>> getServicesByLocation(@PathVariable Long locationId) {

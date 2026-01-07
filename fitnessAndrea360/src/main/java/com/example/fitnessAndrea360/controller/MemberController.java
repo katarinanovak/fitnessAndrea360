@@ -92,12 +92,11 @@ public class MemberController {
         return ResponseEntity.ok(updatedMember);
     }
 
-    @GetMapping("/my-profile")
-    @PreAuthorize("hasRole('MEMBER')")
-    @Operation(summary = "Vidi svoj profil",
-            description = "Član vidi svoj profil.")
-    public ResponseEntity<MemberResponseDTO> getMyProfile() {
-        // Ova metoda će biti implementirana kasnije sa UserService-om
-        return ResponseEntity.ok().build();
-    }
+//    @GetMapping("/my-profile")
+//    @PreAuthorize("hasRole('MEMBER')")
+//    @Operation(summary = "Vidi svoj profil",
+//            description = "Član vidi svoj profil.")
+//    public ResponseEntity<MemberResponseDTO> getMyProfile() {
+//        return ResponseEntity.ok().build();
+//    }
 }

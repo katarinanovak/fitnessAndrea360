@@ -38,11 +38,11 @@ public class PaymentController {
         log.info("Checkout zahtev primljen: serviceId={}, quantity={}",
                 request.getServiceId(), request.getQuantity());
 
-        // Izvuci username (email) iz tokena
+
         String username = authentication.getName();
         log.info("Korisnik iz tokena: {}", username);
 
-        // Pronađi User po email-u
+
         User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> {
                     log.error("Korisnik nije pronađen sa email: {}", username);

@@ -28,7 +28,7 @@ public class ServiceRequestDTO {
     @Positive(message = "Kapacitet mora biti pozitivan")
     private Integer maxCapacity;
 
-    // Lista ID-jeva lokacija gde je usluga dostupna
+
     @NotNull(message = "Morate izabrati bar jednu lokaciju")
     private List<Long> locationIds;
 }

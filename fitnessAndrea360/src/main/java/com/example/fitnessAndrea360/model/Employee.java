@@ -34,7 +34,7 @@ public class Employee {
     @Column(name = "phone")
     private String phone;
 
-    // NOVA POLJA IZ SCHEMA.SQL
+
     private String position;
 
     @Column(name = "hire_date")

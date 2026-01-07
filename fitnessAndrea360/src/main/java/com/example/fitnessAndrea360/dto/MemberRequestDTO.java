@@ -56,16 +56,13 @@ public class MemberRequestDTO {
 
     private String notes;
 
-    // Podaci za kreiranje User naloga
+
     @NotBlank(message = "Korisničko ime je obavezno")
     @Size(min = 3, max = 50, message = "Korisničko ime mora imati između 3 i 50 karaktera")
     private String username;
 
     @NotBlank(message = "Lozinka je obavezna")
     @Size(min = 6, message = "Lozinka mora imati najmanje 6 karaktera")
-//    @Pattern(
-//            regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{6,}$",
-//            message = "Lozinka mora sadržati: najmanje 6 karaktera, jedno veliko slovo, jedno malo slovo, jedan broj i jedan specijalni karakter"
-//    )
+
     private String password;
 }

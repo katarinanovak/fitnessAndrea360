@@ -31,7 +31,7 @@ public class Member {
     @JoinColumn(name = "location_id", nullable = false)
     private Location location;
 
-    // NOVA POLJA IZ SCHEMA.SQL
+
     @Column(nullable = false, unique = true)
     private String email;
 
@@ -83,7 +83,7 @@ public class Member {
         updatedAt = LocalDateTime.now();
     }
 
-    // ENUMI
+
     public enum Gender {
         MALE, FEMALE, OTHER
     }

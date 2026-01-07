@@ -28,7 +28,7 @@ public class MemberService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
-    // DODAJ OVO - pomoćna metoda za dobijanje trenutnog User entiteta SA LOKACIJOM
+    //  pomoćna metoda za dobijanje trenutnog User entiteta SA LOKACIJOM
     private User getCurrentUserWithLocation() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
@@ -40,7 +40,7 @@ public class MemberService {
 
     @Transactional
     public MemberResponseDTO createMember(MemberRequestDTO request) {
-        // 1. Validacija podataka
+
         validateMemberRequest(request);
 
         // 2. Dobijanje trenutno prijavljenog korisnika SA LOKACIJOM
@@ -104,7 +104,7 @@ public class MemberService {
 
         memberUser.setRole(memberRole);
         memberUser.setIsActive(true);
-        memberUser.setLocation(location); // Član dobija istu lokaciju
+        memberUser.setLocation(location);
         memberUser.setPhone(request.getPhone());
         memberUser = userRepository.save(memberUser);
 
@@ -113,7 +113,7 @@ public class MemberService {
         member.setFirstName(request.getFirstName());
         member.setLastName(request.getLastName());
         member.setUser(memberUser);
-        member.setLocation(location); // Član dobija istu lokaciju
+        member.setLocation(location);
         member.setEmail(request.getEmail());
         member.setPhone(request.getPhone());
         member.setDateOfBirth(request.getDateOfBirth());
@@ -378,7 +378,7 @@ public class MemberService {
 
 
     //dodato zbog purchase
-    // Dodaj ovo u MemberService klasu (negde između postojećih metoda):
+
 
     /**
      * Pronalazi Member-a po User ID-u

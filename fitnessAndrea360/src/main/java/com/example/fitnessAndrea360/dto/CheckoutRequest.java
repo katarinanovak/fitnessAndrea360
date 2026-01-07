@@ -13,5 +13,5 @@ public class CheckoutRequest {
     @Min(value = 1, message = "Količina mora biti najmanje 1")
     private Integer quantity;
 
-    // UKLONJENO: private Long memberId;
+
 }

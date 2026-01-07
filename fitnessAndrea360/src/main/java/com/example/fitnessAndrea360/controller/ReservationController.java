@@ -32,20 +32,11 @@ public class ReservationController {
 
     private final ReservationService reservationService;
 
-//    @PostMapping
-//    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE') or hasRole('MEMBER')")
-//    @Operation(summary = "Kreiraj rezervaciju za termin",
-//            description = "Kreiraj rezervaciju za postojeći termin")
-//    public ResponseEntity<ReservationResponseDTO> createReservation(@Valid @RequestBody ReservationRequestDTO request) {
-//        ReservationResponseDTO reservation = reservationService.createReservation(request);
-//        return ResponseEntity.status(HttpStatus.CREATED).body(reservation);
-//    }
     @PostMapping
     @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE') or hasRole('MEMBER')")
     @Operation(summary = "Kreiraj rezervaciju za termin",
             description = "Kreiraj rezervaciju za postojeći termin")
     public ResponseEntity<ReservationResponseDTO> createReservation(@Valid @RequestBody ReservationRequestDTO request) {
-        // DODAJ OVU PROVERU:
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
 

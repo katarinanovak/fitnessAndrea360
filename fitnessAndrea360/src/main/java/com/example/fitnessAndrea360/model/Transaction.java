@@ -28,7 +28,7 @@ public class Transaction {
     @Column(name = "amount_eur", nullable = false, precision = 10, scale = 2)
     private BigDecimal amountEur;
 
-    // NOVA POLJA IZ data.sql
+
     @Column(length = 3)
     private String currency = "EUR";
 

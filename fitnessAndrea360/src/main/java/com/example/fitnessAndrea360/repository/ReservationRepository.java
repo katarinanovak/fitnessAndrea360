@@ -12,16 +12,16 @@ import java.util.List;
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
-    // Pronađi sve rezervacije za određeni appointment
+
     List<Reservation> findByAppointmentId(Long appointmentId);
 
-    // Pronađi sve rezervacije za određenog člana
+
     List<Reservation> findByMemberId(Long memberId);
 
-    // Pronađi sve rezervacije za određenu lokaciju
+
     List<Reservation> findByAppointmentLocationId(Long locationId);
 
-    // Pronađi sve rezervacije za određenu kupovinu
+
     List<Reservation> findByPurchaseId(Long purchaseId);
 
     // Pronađi rezervacije za lokaciju u određenom vremenskom periodu
@@ -33,34 +33,34 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             @Param("startTime") LocalDateTime startTime,
             @Param("endTime") LocalDateTime endTime);
 
-    // Provera da li već postoji rezervacija za appointment
+
     boolean existsByAppointmentId(Long appointmentId);
 
-    // Provera da li član već ima rezervaciju za appointment
+
     boolean existsByMemberIdAndAppointmentId(Long memberId, Long appointmentId);
 
-    // Broj aktivnih rezervacija za appointment (nije otkazano)
+
     @Query("SELECT COUNT(r) FROM Reservation r WHERE " +
             "r.appointment.id = :appointmentId AND " +
             "r.status NOT IN (com.example.fitnessAndrea360.model.Reservation.Status.CANCELLED, " +
             "com.example.fitnessAndrea360.model.Reservation.Status.NO_SHOW)")
     long countActiveReservationsByAppointmentId(@Param("appointmentId") Long appointmentId);
 
-    // Rezervacije po statusu
+
     List<Reservation> findByStatus(Reservation.Status status);
 
-    // Rezervacije po statusu kao String (za servis)
+
     @Query("SELECT r FROM Reservation r WHERE r.status = :status")
     List<Reservation> findByStatus(@Param("status") String status);
 
-    // Rezervacije člana po statusu
+
     List<Reservation> findByMemberIdAndStatus(Long memberId, Reservation.Status status);
 
-    // Rezervacije člana po statusu kao String (za servis)
+
     @Query("SELECT r FROM Reservation r WHERE r.member.id = :memberId AND r.status = :status")
     List<Reservation> findByMemberIdAndStatus(@Param("memberId") Long memberId, @Param("status") String status);
 
-    // Današnje rezervacije za člana
+
     @Query("SELECT r FROM Reservation r WHERE " +
             "r.member.id = :memberId AND " +
             "r.appointment.startTime BETWEEN :startOfDay AND :endOfDay")
@@ -69,7 +69,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             @Param("startOfDay") LocalDateTime startOfDay,
             @Param("endOfDay") LocalDateTime endOfDay);
 
-    // Rezervacije koje ističu u narednih X dana
     @Query("SELECT r FROM Reservation r WHERE " +
             "r.appointment.startTime BETWEEN :startDate AND :endDate AND " +
             "r.status = com.example.fitnessAndrea360.model.Reservation.Status.CONFIRMED")
@@ -77,7 +76,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             @Param("startDate") LocalDateTime startDate,
             @Param("endDate") LocalDateTime endDate);
 
-    // NOVE METODE POTREBNE ZA SERVIS:
+
 
     // Rezervacije za appointment u određenom vremenskom periodu
     @Query("SELECT r FROM Reservation r WHERE " +
@@ -128,7 +127,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     // Rezervacije po statusu i lokaciji (sa enum statusom)
     List<Reservation> findByStatusAndAppointmentLocationId(Reservation.Status status, Long locationId);
 
-    // Statistika - broj rezervacija po statusu za člana
+
     @Query("SELECT COUNT(r) FROM Reservation r WHERE " +
             "r.member.id = :memberId AND " +
             "r.status = :status")

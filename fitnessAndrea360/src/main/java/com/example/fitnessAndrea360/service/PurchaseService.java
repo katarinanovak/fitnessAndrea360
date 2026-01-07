@@ -28,8 +28,8 @@ import java.util.stream.Collectors;
 public class PurchaseService {
 
     private final PurchaseRepository purchaseRepository;
-    private final MemberRepository memberRepository; // DODAJ OVO
-    private final ServiceRepository serviceRepository; // DODAJ OVO
+    private final MemberRepository memberRepository;
+    private final ServiceRepository serviceRepository;
     private final UserRepository userRepository;
 
     /**
@@ -210,7 +210,7 @@ public class PurchaseService {
             purchase.setMember(member);
             purchase.setService(service);
             purchase.setQuantity(quantity);
-            purchase.setRemainingUses(quantity); // Na početku sve su dostupne
+            purchase.setRemainingUses(quantity);
             purchase.setTotalPriceEur(totalPrice);
             purchase.setPurchaseDate(LocalDate.now());
             purchase.setStatus(Purchase.Status.ACTIVE);

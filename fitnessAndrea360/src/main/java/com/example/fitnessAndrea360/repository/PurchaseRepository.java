@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
     List<Purchase> findByMemberId(Long memberId);
-    // OVO DODAJ:
+
 
 
 
@@ -17,7 +17,7 @@ public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
     List<Purchase> findByMemberIdAndServiceId(@Param("memberId") Long memberId,
                                               @Param("serviceId") Long serviceId);
 
-    // Ako treba i po statusu:
+
     List<Purchase> findByMemberIdAndServiceIdAndStatus(Long memberId, Long serviceId, Purchase.Status status);
 
     // Za pronalaženje aktivnih purchase-a sa remainingUses > 0:

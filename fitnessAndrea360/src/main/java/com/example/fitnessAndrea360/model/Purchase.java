@@ -32,7 +32,7 @@ public class Purchase {
     @Column(name = "remaining_uses", nullable = false)
     private Integer remainingUses = 0;
 
-    // NOVA POLJA IZ data.sql
+
     @Column(name = "total_price_eur", nullable = false, precision = 10, scale = 2)
     private BigDecimal totalPriceEur;
 

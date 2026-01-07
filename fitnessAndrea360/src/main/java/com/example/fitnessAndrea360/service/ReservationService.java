@@ -90,7 +90,7 @@ public class ReservationService {
         // 5. Kreiranje rezervacije sa TRENUTNIM članom
         Reservation reservation = new Reservation();
         reservation.setAppointment(appointment);
-        reservation.setMember(currentMember); // OVO JE KLJUČNO: koristi currentMember, ne appointment.getMember()
+        reservation.setMember(currentMember); //  koristi currentMember, ne appointment.getMember()
         reservation.setPurchase(purchase);
         reservation.setStatus(Reservation.Status.CONFIRMED);
         reservation.setNotes(request.getNotes());
@@ -108,52 +108,7 @@ public class ReservationService {
         return mapToResponse(savedReservation);
     }
 
-//    @Transactional
-//    public ReservationResponseDTO createReservation(ReservationRequestDTO request) {
-//        User currentUser = getCurrentUserWithLocation();
-//        // DODAJ OVU PROVERU ZA ČLANOVE:
-//        String userRole = currentUser.getRole().getName();
-//        if (userRole.equals("MEMBER")) {
-//            // Član MORA da prosledi purchaseId u request-u
-//            if (request.getPurchaseId() == null) {
-//                throw new ValidationException("Član mora da izabere paket za rezervaciju");
-//            }
-//        }
-//
-//        // 1. Dobijanje entiteta
-//        Appointment appointment = appointmentRepository.findById(request.getAppointmentId())
-//                .orElseThrow(() -> new ResourceNotFoundException("Termin nije pronađen"));
-//
-//        Member member = appointment.getMember();
-//        Purchase purchase = purchaseRepository.findById(request.getPurchaseId())
-//                .orElseThrow(() -> new ResourceNotFoundException("Kupovina nije pronađena"));
-//
-//        // 2. Provera prava pristupa
-//        validateReservationAccess(currentUser, appointment);
-//
-//        // 3. Validacije
-//        validateReservation(appointment, member, purchase);
-//
-//        // 4. Kreiranje rezervacije
-//        Reservation reservation = new Reservation();
-//        reservation.setAppointment(appointment);
-//        reservation.setMember(member);
-//        reservation.setPurchase(purchase);
-//        reservation.setStatus(Reservation.Status.CONFIRMED);
-//        reservation.setNotes(request.getNotes());
-//
-//        // 5. Smanji remainingUses u purchase
-//        purchase.setRemainingUses(purchase.getRemainingUses() - 1);
-//        purchaseRepository.save(purchase);
-//
-//        // 6. Povećaj currentCapacity u appointment
-//        appointment.setCurrentCapacity(appointment.getCurrentCapacity() + 1);
-//        appointmentRepository.save(appointment);
-//
-//        Reservation savedReservation = reservationRepository.save(reservation);
-//
-//        return mapToResponse(savedReservation);
-//    }
+
 
     @Transactional(readOnly = true)
     public AppointmentCapacityDTO getAppointmentCapacity(Long appointmentId) {
@@ -498,41 +453,7 @@ public class ReservationService {
                 .collect(Collectors.toList());
     }
 
-    // PRIVATE METODE:
 
-//    private void validateReservationAccess(User user, Appointment appointment) {
-//        String userRole = user.getRole().getName();
-//
-//        if (userRole.equals("ADMIN")) {
-//            return;
-//        }
-//
-//        if (userRole.equals("EMPLOYEE")) {
-//            // Zaposleni može pristupiti rezervacijama samo na svojoj lokaciji
-//            Long userLocationId = getLocationIdFromToken();
-//
-//            if (userLocationId == null || !userLocationId.equals(appointment.getLocation().getId())) {
-//                throw new UnauthorizedAccessException(
-//                        "Možete pristupiti rezervacijama samo na svojoj lokaciji"
-//                );
-//            }
-//            return;
-//        }
-//
-//        if (userRole.equals("MEMBER")) {
-//            // Član može pristupiti rezervacijama samo za svoje termine
-//            Member member = memberRepository.findByUserId(user.getId())
-//                    .orElseThrow(() -> new ResourceNotFoundException("Član nije pronađen"));
-//
-//            if (!member.getId().equals(appointment.getMember().getId())) {
-//                throw new UnauthorizedAccessException("Možete pristupiti samo svojim rezervacijama");
-//            }
-//            return;
-//        }
-//
-//        throw new UnauthorizedAccessException("Nemaš pravo pristupa");
-//    }
-//
 private void validateReservationAccess(User user, Appointment appointment) {
     String userRole = user.getRole().getName();
 
@@ -595,28 +516,6 @@ private void validateReservationAccess(User user, Appointment appointment) {
 //        }
     }
 
-//    private void validateReservation(Appointment appointment, Member member, Purchase purchase) {
-//        // 1. Provera kapaciteta
-//        if (appointment.getCurrentCapacity() >= appointment.getMaxCapacity()) {
-//            throw new ValidationException("Termin je popunjen. Nema slobodnih mesta.");
-//        }
-//
-//        // 2. Provera da li ČLAN već ima rezervaciju za ovaj appointment
-//        boolean alreadyReservedByMember = reservationRepository.existsByMemberIdAndAppointmentId(
-//                member.getId(), appointment.getId());
-//
-//        if (alreadyReservedByMember) {
-//            throw new ValidationException("Već imate rezervaciju za ovaj termin");
-//        }
-//
-//        // 3. Provera da li je kupovina validna
-//        validatePurchaseForReservation(purchase, appointment, member);
-//
-//        // 4. Provera da li je appointment još uvek aktivan
-//        if (appointment.getStatus().equals("CANCELLED")) {
-//            throw new ValidationException("Termin je otkazan");
-//        }
-//    }
 
     private void validatePurchaseForReservation(Purchase purchase, Appointment appointment, Member member) {
         // 1. Provera da li kupovina pripada članu

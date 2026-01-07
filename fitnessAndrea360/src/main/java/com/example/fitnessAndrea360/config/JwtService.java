@@ -79,7 +79,7 @@ public class JwtService {
     }
 
     private Key getSignInKey() {
-        // KORIGUJ OVO - bez Base64 dekodiranja
+
         byte[] keyBytes = secretKey.getBytes();
         return io.jsonwebtoken.security.Keys.hmacShaKeyFor(keyBytes);
     }

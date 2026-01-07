@@ -18,9 +18,9 @@ public class AppointmentResponseDTO {
     private Long serviceId;
     private String serviceName;
     private BigDecimal servicePrice;
-    private Integer durationMinutes;      // ← PREBACI OVDE!
-    private Integer maxCapacity;          // ← PREBACI OVDE!
-    private Integer currentCapacity;      // ← PREBACI OVDE!
+    private Integer durationMinutes;
+    private Integer maxCapacity;
+    private Integer currentCapacity;
     private Long memberId;
     private String memberName;
     private String memberEmail;

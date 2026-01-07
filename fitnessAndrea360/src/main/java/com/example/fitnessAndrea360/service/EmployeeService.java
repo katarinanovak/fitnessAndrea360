@@ -112,7 +112,7 @@ public class EmployeeService {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee", "id", employeeId));
 
-        employee.getUser().setIsActive(false); // PROMENJENO
+        employee.getUser().setIsActive(false);
         userRepository.save(employee.getUser());
     }
 
@@ -121,7 +121,7 @@ public class EmployeeService {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee", "id", employeeId));
 
-        employee.getUser().setIsActive(true); // PROMENJENO
+        employee.getUser().setIsActive(true);
         userRepository.save(employee.getUser());
     }
 
@@ -133,7 +133,7 @@ public class EmployeeService {
                 .lastName(employee.getLastName())
                 .locationId(employee.getLocation().getId())
                 .locationName(employee.getLocation().getName())
-                .active(employee.getUser().getIsActive()) // PROMENJENO SA getEnabled() NA getIsActive()
+                .active(employee.getUser().getIsActive())
                 .createdAt(employee.getCreatedAt())
                 .build();
     }

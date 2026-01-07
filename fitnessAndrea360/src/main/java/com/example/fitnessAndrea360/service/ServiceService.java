@@ -26,7 +26,7 @@ public class ServiceService {
     private final LocationRepository locationRepository;
     private final UserRepository userRepository;
 
-    // DODAJ OVO - pomoćna metoda za dobijanje trenutnog User entiteta SA LOKACIJOM
+    //pomoćna metoda za dobijanje trenutnog User entiteta SA LOKACIJOM
     private User getCurrentUserWithLocation() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
@@ -36,7 +36,7 @@ public class ServiceService {
                 .orElseThrow(() -> new RuntimeException("Trenutni korisnik nije pronađen u bazi"));
     }
 
-    // DODAJ OVO - metoda za dobijanje locationId iz JWT tokena
+
     private Long getLocationIdFromToken() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 

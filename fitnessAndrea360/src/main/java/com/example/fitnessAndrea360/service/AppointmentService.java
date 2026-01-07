@@ -32,7 +32,7 @@ public class AppointmentService {
     private final PurchaseRepository purchaseRepository;
     private final ReservationRepository reservationRepository;
 
-    // KORISTI ISTU METODU KAO U ServiceService i MemberService
+
     private User getCurrentUserWithLocation() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
@@ -48,16 +48,16 @@ public class AppointmentService {
     public List<AppointmentResponseDTO> getAvailableAppointmentsForCurrentMember() {
         User currentUser = getCurrentUserWithLocation();
 
-        // Pronađi člана
+
         Member member = memberRepository.findByUserId(currentUser.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Član nije pronađen"));
 
         LocalDateTime now = LocalDateTime.now();
 
-        // Dobavi sve dostupne termine
+
         List<Appointment> allAppointments = appointmentRepository.findByStartTimeAfterAndStatus(now, "SCHEDULED");
 
-        // ✅ NOVO - Dobavi sve KUPOVINE za ovog člana
+
         List<Purchase> memberPurchases = purchaseRepository.findByMemberId(member.getId());
 
 
@@ -97,7 +97,7 @@ public class AppointmentService {
 
         Long targetLocationId;
 
-        // Odredi locationId na osnovu role - KORISTI ISTU LOGIKU KAO U ServiceService
+
         if (userRole.equals("EMPLOYEE")) {
             // Zaposleni MORA koristiti svoju lokaciju iz baze
             if (currentUser.getLocation() == null) {
@@ -106,7 +106,7 @@ public class AppointmentService {
             targetLocationId = currentUser.getLocation().getId();
             System.out.println("Employee using their location from database: " + targetLocationId);
 
-            // IGNORIŠI locationId iz requesta ako je employee
+
             System.out.println("Ignoring requested locationId: " + request.getLocationId());
 
         } else if (userRole.equals("ADMIN")) {
@@ -126,15 +126,15 @@ public class AppointmentService {
             throw new UnauthorizedAccessException("Nemaš pravo da kreiraš termine");
         }
 
-        // 1. Provera da li je startTime u budućnosti
+
         if (request.getStartTime().isBefore(LocalDateTime.now())) {
             throw new ValidationException("Termin mora biti u budućnosti");
         }
 
-        // 2. Provera prava pristupa
+
         validateAppointmentAccess(currentUser, request, targetLocationId);
 
-        // 3. Dobijanje entiteta
+
         com.example.fitnessAndrea360.model.Service service = serviceRepository.findById(Math.toIntExact(request.getServiceId()))
                 .orElseThrow(() -> new ResourceNotFoundException("Usluga nije pronađena"));
 
@@ -144,7 +144,7 @@ public class AppointmentService {
         Location location = locationRepository.findById(targetLocationId)
                 .orElseThrow(() -> new ResourceNotFoundException("Lokacija nije pronađena"));
 
-        // 4. Validacije
+
         validateAppointment(service, member, location, request.getStartTime());
 
         // 5. Provera zauzetosti - da li član već ima termin u to vreme
@@ -167,15 +167,15 @@ public class AppointmentService {
             }
         }
 
-        // 7. Kreiranje Appointment-a
+
         Appointment appointment = new Appointment();
         appointment.setService(service);
         appointment.setMember(member);
         appointment.setLocation(location);
         appointment.setCreatedBy(currentUser);
         appointment.setStartTime(request.getStartTime());
-        appointment.setMaxCapacity(service.getMaxCapacity()); // DODAJ OVO
-        appointment.setCurrentCapacity(0); // DODAJ OVO - početni kapacitet
+        appointment.setMaxCapacity(service.getMaxCapacity());
+        appointment.setCurrentCapacity(0);
         appointment.setEndTime(request.getStartTime().plusMinutes(service.getDurationMinutes()));
         appointment.setStatus("SCHEDULED");
         appointment.setNotes(request.getNotes());
@@ -189,7 +189,7 @@ public class AppointmentService {
         String userRole = user.getRole().getName();
 
         if (userRole.equals("ADMIN")) {
-            return; // Admin može sve
+            return;
         }
 
         if (userRole.equals("EMPLOYEE")) {
@@ -219,7 +219,7 @@ public class AppointmentService {
     }
 
     private void validateAppointment(com.example.fitnessAndrea360.model.Service service, Member member, Location location, LocalDateTime startTime) {
-        // Provera da li je usluga dostupna na toj lokaciji
+
         boolean isServiceAvailableAtLocation = service.getLocations().stream()
                 .anyMatch(loc -> loc.getId().equals(location.getId()));
 
@@ -227,29 +227,29 @@ public class AppointmentService {
             throw new ValidationException("Usluga '" + service.getName() + "' nije dostupna na lokaciji '" + location.getName() + "'");
         }
 
-        // Provera da li je član aktivan
+
         if (!member.getMembershipStatus().equals(Member.MembershipStatus.ACTIVE)) {
             throw new ValidationException("Član nema aktivan status članstva");
         }
 
-        // Provera da li je član član te lokacije
+
         if (!member.getLocation().getId().equals(location.getId())) {
             throw new ValidationException("Član nije član ove lokacije");
         }
 
-        // Provera da li je termin u radnom vremenu (npr. 8:00 - 22:00)
+
         int hour = startTime.getHour();
         if (hour < 8 || hour > 22) {
             throw new ValidationException("Termini su dostupni samo između 8:00 i 22:00");
         }
 
-        // Provera da li je termin najmanje 2 sata unapred
+
         if (startTime.isBefore(LocalDateTime.now().plusHours(2))) {
             throw new ValidationException("Termin mora biti zakazan najmanje 2 sata unapred");
         }
     }
 
-    // ========== NOVE METODE ZA CONTROLLER ==========
+
 
     /**
      * Vrati sve dostupne termine za člana
@@ -402,7 +402,7 @@ public class AppointmentService {
         appointmentRepository.delete(appointment);
     }
 
-    // ========== POSTOJEĆE METODE ==========
+
 
     public List<AppointmentResponseDTO> getTodayAppointmentsByLocation(Long locationId) {
         User currentUser = getCurrentUserWithLocation();
@@ -478,7 +478,7 @@ public class AppointmentService {
         return mapToResponse(updatedAppointment);
     }
 
-    // ========== STATUS KAPACITETA ==========
+
 
     public CapacityStatusDTO getLocationCapacityStatus(Long locationId, LocalDate date) {
         User currentUser = getCurrentUserWithLocation();

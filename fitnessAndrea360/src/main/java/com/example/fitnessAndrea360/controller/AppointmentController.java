@@ -36,7 +36,7 @@ public class AppointmentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(appointment);
     }
 
-    // DODAJ OVE ENDPOINT-E:
+
 
     @GetMapping("/available")
     @PreAuthorize("hasRole('MEMBER')")

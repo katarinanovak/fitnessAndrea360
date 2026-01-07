@@ -40,7 +40,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
-                        // Swagger UI i OpenAPI dokumentacija
+
                         .requestMatchers(
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
@@ -57,10 +57,10 @@ public class SecurityConfig {
 
 
 
-                        // Autentifikacioni endpointi
+
                         .requestMatchers("/auth/**").permitAll()
 
-                        // Sve ostalo zahtjeva autentikaciju
+
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

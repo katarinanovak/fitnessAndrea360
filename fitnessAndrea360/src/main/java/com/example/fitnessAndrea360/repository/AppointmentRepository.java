@@ -41,7 +41,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
             @Param("startTime") LocalDateTime startTime,
             @Param("endTime") LocalDateTime endTime);
 
-    // NOVE METODE:
+
 
     // Pronađi termine koji počinju nakon određenog vremena i imaju određeni status
     List<Appointment> findByStartTimeAfterAndStatus(LocalDateTime startTime, String status);

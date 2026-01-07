@@ -27,7 +27,7 @@ public class UserService implements UserDetailsService {
                 Collections.singletonList(() -> "ROLE_" + user.getRole().getName())
         );
     }
-    // DODAJ OVO!
+
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + email));

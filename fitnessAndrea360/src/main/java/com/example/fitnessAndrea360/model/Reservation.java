@@ -32,7 +32,7 @@ public class Reservation {
     @Column(nullable = false, length = 20)
     private Status status = Status.CONFIRMED;
 
-    // NOVO POLJE IZ data.sql
+
     @Column(length = 1000)
     private String notes;
 
